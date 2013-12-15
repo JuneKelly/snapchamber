@@ -24,7 +24,7 @@ angular.module('snaplyApp')
     template: '<div class="camera"><video class="camera" autoplay="" /><div ng-transclude></div></div>',
     link: (scope, ele, attrs) ->
       w = attrs.width || 320
-      h = attrs.height || 200
+      h = attrs.height || 260
 
       if (!CameraService.hasUserMedia)
         return
