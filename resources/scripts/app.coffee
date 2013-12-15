@@ -4,8 +4,7 @@ angular.module('snaplyApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ngRoute',
-  'omr.directives'
+  'ngRoute'
 ])
   .config ($routeProvider, $sceDelegateProvider) ->
     $sceDelegateProvider.resourceUrlWhitelist ['self', 'blob:**']

@@ -9,17 +9,14 @@
 
 <div class="jumbotron row">
   <div id="main-panel" class="col-md-12">
-    <ng-camera
-      type="photo"
-      enabled="true"
-      width="400"
-      countdown="3"
-      ng-model="media"
-      capture-message="Go!"></ng-camera>
+    <camera>
+      <camera-control-snapshot></camera-control-snapshot>
+    </camera>
   </div>
 </div>
 <div id="image-view">
   <img src="{{media}}" />
+  <canvas></canvas>
 </div>
 
 <div class="footer">
