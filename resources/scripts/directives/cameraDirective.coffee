@@ -23,8 +23,6 @@ angular.module('snaplyApp')
       return this
     template: '<div class="camera"><video class="camera" autoplay="" /><div ng-transclude></div></div>',
     link: (scope, ele, attrs) ->
-      w = attrs.width || 320
-      h = attrs.height || 260
 
       if (!CameraService.hasUserMedia)
         return
@@ -32,6 +30,14 @@ angular.module('snaplyApp')
         userMedia = CameraService.getUserMedia()
         videoElement = document.querySelector('video')
 
+        scope.setVideoSize = () ->
+          scope.w = videoElement.videoWidth
+          scope.h = videoElement.videoHeight
+          console.log scope.w
+          console.log scope.h
+          videoElement.removeEventListener('playing', scope.setVideoSize, false)
+
+        videoElement.addEventListener('playing', scope.setVideoSize, false)
 
         onSuccess = (stream) ->
           if (navigator.mozGetUserMedia)
@@ -50,13 +56,12 @@ angular.module('snaplyApp')
         navigator.getUserMedia({
           video: {
             mandatory: {
-              maxHeight: h
-              maxWidth: w
+              maxWidth: 400
             }
           },
           audio: false
         }, onSuccess, onFailure)
 
-        scope.w = w
-        scope.h = h
+        scope.w = 0
+        scope.h = 0
 
