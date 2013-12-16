@@ -6,14 +6,17 @@
 </div>
 
 <div class="jumbotron row">
-  <div id="main-panel" class="col-md-12">
+  <div id="main-panel" class="col-md-12" ng-hide="media">
     <camera>
       <camera-control-snapshot></camera-control-snapshot>
     </camera>
-    <div id="image-view">
-      <br>
-      <p><canvas class="img-rounded"></canvas></p>
-    </div>
+  </div>
+  <div id="image-view" ng-show="media">
+    <p><canvas class="img-rounded"></canvas></p>
+    <p>
+      <button id="save" class="btn btn-success" ng-click="saveMedia()">Save</button>
+      <button id="clear" class="btn btn-warning" ng-click="clearMedia()">Back</button>
+    </p>
   </div>
 </div>
 
