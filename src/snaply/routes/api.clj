@@ -2,17 +2,19 @@
   (:use compojure.core)
   (:require [liberator.core
              :refer [defresource
-                     request-method-in]]))
+                     request-method-in]]
+            [snaply.util :as util]
+            [snaply.db :as db]))
 
 
 (defn create-snap
   [context]
-  (println (get-in context [:request :params])))
-
-
-(defn get-snap-id
-  [context]
-  (comment "todo"))
+  (let [params (get-in context [:request :params])
+        snap-id (util/short-id)]
+    (do
+      (db/create-snap snap-id
+                      (params :imageData))
+      {:snap-id snap-id})))
 
 
 (defresource snap
@@ -30,7 +32,7 @@
     (str "Error: imageData required"))
 
   :post! create-snap
-  :handle-created (fn [_] {:snapId "asdf"}))
+  :handle-created (fn [context] {:snapId (context :snap-id)}))
 
 
 (defroutes api-routes

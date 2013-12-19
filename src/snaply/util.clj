@@ -21,3 +21,9 @@
   "Generate a uuid"
   []
   (str (java.util.UUID/randomUUID)))
+
+
+(defn short-id
+  "Generate a short id"
+  []
+  (first (clojure.string/split (uuid) #"-")))
