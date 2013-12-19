@@ -8,6 +8,8 @@
 
 
 (defn save-snap
+  "Generate an id for the new snap and save it to database,
+   returning the new snap id"
   [context]
   (let [params (get-in context [:request :params])
         snap-id (util/short-id)]
