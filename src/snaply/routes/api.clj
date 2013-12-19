@@ -7,7 +7,7 @@
             [snaply.db :as db]))
 
 
-(defn create-snap
+(defn save-snap
   [context]
   (let [params (get-in context [:request :params])
         snap-id (util/short-id)]
@@ -17,10 +17,10 @@
       {:snap-id snap-id})))
 
 
-(defresource snap
+(defresource create-snap
   :service-available? true
   :available-media-types ["application/json"]
-  :method-allowed? (request-method-in :get :post)
+  :method-allowed? (request-method-in :post)
 
   :malformed?
   (fn [context]
@@ -31,9 +31,9 @@
   (fn [_]
     (str "Error: imageData required"))
 
-  :post! create-snap
+  :post! save-snap
   :handle-created (fn [context] {:snapId (context :snap-id)}))
 
 
 (defroutes api-routes
-  (ANY "/api/snap" [] snap))
+  (POST "/api/snap" [] create-snap))

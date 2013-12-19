@@ -7,6 +7,7 @@
 
 (mg/connect-via-uri! "mongodb://localhost/snaply")
 
+
 (defn create-snap [id image-data]
   (let [doc {:_id id
              :imageData image-data
