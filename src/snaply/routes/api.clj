@@ -27,11 +27,12 @@
   :malformed?
   (fn [context]
     (let [params (get-in context [:request :params])]
-      (empty? (params :imageData))))
+      [(empty? (params :imageData))
+       {:representation {:media-type "application/json"}}]))
 
   :handle-malformed
   (fn [_]
-    (str "Error: imageData required"))
+    {:error "imageData required"})
 
   :post! save-snap
   :handle-created (fn [context] {:snapId (context :snap-id)}))
