@@ -19,13 +19,25 @@
       {:snap-id snap-id})))
 
 
-(defn request-malformed? [context]
+;; needed to specify the representation of response
+(def rep-map
+  {:representation {:media-type "application/json"}})
+
+
+(defn post-malformed?
+  [params]
+  (if (empty? (:imageData params))
+    [true, (merge rep-map {:snap-error "imageData required"})]
+    [false, rep-map]))
+
+
+(defn snap-request-malformed? [context]
   (let [method (get-in context [:request :request-method])
         params (get-in context [:request :params])]
-    [(if (= method :get)
-      false  ;; presume request is fine if GET method
-      (empty? (params :imageData)))
-     {:representation {:media-type "application/json"}}]))
+    (if (= method :get)
+      [false, rep-map] ;; presume we're fine with GET
+      (if (= method :post)
+        (post-malformed? params)))))
 
 
 (defresource snap [snap-id]
@@ -40,11 +52,11 @@
        :imageData (:imageData snap)}))
 
   :malformed?
-  request-malformed?
+  snap-request-malformed?
 
   :handle-malformed
-  (fn [_]
-    {:error "imageData required"})
+  (fn [context]
+    {:error (:snap-error context)})
 
   :post! save-snap
   :handle-created (fn [context] {:snapId (context :snap-id)}))
