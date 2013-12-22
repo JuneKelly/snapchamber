@@ -12,7 +12,7 @@
             [clojurewerkz.quartzite.schedule.simple
              :refer [schedule
                      repeat-forever
-                     with-interval-in-milliseconds]]
+                     with-interval-in-minutes]]
             [clojurewerkz.quartzite.jobs :as j]
             [clojurewerkz.quartzite.triggers :as t]
             [snaply.db :as db]))
@@ -33,7 +33,7 @@
     (t/start-now)
     (t/with-schedule (schedule
                        (repeat-forever)
-                       (with-interval-in-milliseconds 10000)))))
+                       (with-interval-in-minutes 15)))))
 
 
 ;; ;; ;; ;;
