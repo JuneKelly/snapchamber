@@ -7,8 +7,36 @@
             [taoensso.timbre :as timbre]
             [com.postspectacular.rotor :as rotor]
             [selmer.parser :as parser]
-            [environ.core :refer [env]]))
+            [environ.core :refer [env]]
+            [clojurewerkz.quartzite.scheduler :as qs]
+            [clojurewerkz.quartzite.schedule.simple
+             :refer [schedule
+                     repeat-forever
+                     with-interval-in-minutes]]
+            [clojurewerkz.quartzite.jobs :as j]
+            [clojurewerkz.quartzite.triggers :as t]
+            [snaply.db :as db]))
 
+
+;; playing with quartzite
+(j/defjob Derp [ctx]
+  (db/cleanup-snaps!))
+
+(def job
+  (j/build
+    (j/of-type Derp)
+    (j/with-identity (j/key "jobs.derp.1"))))
+
+(def trig
+  (t/build
+    (t/with-identity (t/key "triggers.1"))
+    (t/start-now)
+    (t/with-schedule (schedule
+                       (repeat-forever)
+                       (with-interval-in-minutes 15)))))
+
+
+;; ;; ;; ;;
 
 (defroutes app-routes
   (route/resources "/")
@@ -34,7 +62,12 @@
     {:path "snaply.log" :max-size (* 512 1024) :backlog 10})
 
   (if (env :selmer-dev) (parser/cache-off!))
-  (timbre/info "snaply started successfully"))
+  (timbre/info "snaply started successfully")
+  (.start (Thread.
+    (fn []
+      (do (qs/initialize)
+          (qs/start)
+          (qs/schedule job trig))))))
 
 
 (defn destroy

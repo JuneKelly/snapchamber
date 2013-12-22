@@ -1,4 +1,4 @@
-(defproject snaply "0.2.0-SNAPSHOT"
+(defproject snaply "0.2.1-SNAPSHOT"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
 
@@ -13,6 +13,8 @@
                  [markdown-clj "0.9.35"]
                  [liberator "0.10.0"]
                  [com.novemberain/monger "1.5.0"]
+                 [clojurewerkz/quartzite "1.1.0"]
+                 [clj-time "0.6.0"]
                  [environ "0.4.0"]]
 
   :aot :all
