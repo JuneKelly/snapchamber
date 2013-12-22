@@ -12,28 +12,28 @@
             [clojurewerkz.quartzite.schedule.simple
              :refer [schedule
                      repeat-forever
-                     with-interval-in-minutes]]
+                     with-interval-in-milliseconds]]
             [clojurewerkz.quartzite.jobs :as j]
             [clojurewerkz.quartzite.triggers :as t]
             [snaply.db :as db]))
 
 
 ;; playing with quartzite
-(j/defjob Derp [ctx]
+(j/defjob CleanupSnaps [ctx]
   (db/cleanup-snaps!))
 
 (def job
   (j/build
-    (j/of-type Derp)
-    (j/with-identity (j/key "jobs.derp.1"))))
+    (j/of-type CleanupSnaps)
+    (j/with-identity (j/key "jobs.cleanup-snaps.1"))))
 
-(def trig
+(def trigger
   (t/build
     (t/with-identity (t/key "triggers.1"))
     (t/start-now)
     (t/with-schedule (schedule
                        (repeat-forever)
-                       (with-interval-in-minutes 15)))))
+                       (with-interval-in-milliseconds 10000)))))
 
 
 ;; ;; ;; ;;
@@ -63,11 +63,11 @@
 
   (if (env :selmer-dev) (parser/cache-off!))
   (timbre/info "snaply started successfully")
-  (.start (Thread.
-    (fn []
-      (do (qs/initialize)
-          (qs/start)
-          (qs/schedule job trig))))))
+
+  ;; Quartzite scheduler
+  (qs/initialize)
+  (qs/start)
+  (qs/schedule job trigger))
 
 
 (defn destroy
