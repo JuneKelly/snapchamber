@@ -19,28 +19,28 @@
       {:snap-id snap-id})))
 
 
-(defresource get-snap [snap-id]
+(defn request-malformed? [context]
+  (let [method (get-in context [:request :request-method])
+        params (get-in context [:request :params])]
+    [(if (= method :get)
+      false  ;; presume request is fine if GET method
+      (empty? (params :imageData)))
+     {:representation {:media-type "application/json"}}]))
+
+
+(defresource snap [snap-id]
   :service-available? true
   :available-media-types ["application/json"]
-  :method-allowed? (request-method-in :get)
+  :method-allowed? (request-method-in :get :post)
 
   :handle-ok
   (fn [_]
     (let [snap (db/get-snap snap-id)]
       {:snapId snap-id
-       :imageData (:imageData snap)})))
-
-
-(defresource create-snap
-  :service-available? true
-  :available-media-types ["application/json"]
-  :method-allowed? (request-method-in :post)
+       :imageData (:imageData snap)}))
 
   :malformed?
-  (fn [context]
-    (let [params (get-in context [:request :params])]
-      [(empty? (params :imageData))
-       {:representation {:media-type "application/json"}}]))
+  request-malformed?
 
   :handle-malformed
   (fn [_]
@@ -51,5 +51,5 @@
 
 
 (defroutes api-routes
-  (POST "/api/snap" [] create-snap)
-  (GET "/api/snap/:snap-id" [snap-id] (get-snap snap-id)))
+  (POST "/api/snap" [] snap)
+  (GET "/api/snap/:snap-id" [snap-id] (snap snap-id)))
