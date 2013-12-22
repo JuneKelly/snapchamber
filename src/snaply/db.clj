@@ -14,3 +14,8 @@
              :created (datetime)}]
     (do
       (mc/insert "snap" doc))))
+
+
+(defn get-snap [snap-id]
+  (let [doc (mc/find-one-as-map "snap" {:_id snap-id})]
+    doc))

@@ -19,6 +19,18 @@
       {:snap-id snap-id})))
 
 
+(defresource get-snap [snap-id]
+  :service-available? true
+  :available-media-types ["application/json"]
+  :method-allowed? (request-method-in :get)
+
+  :handle-ok
+  (fn [_]
+    (let [snap (db/get-snap snap-id)]
+      {:snapId snap-id
+       :imageData (:imageData snap)})))
+
+
 (defresource create-snap
   :service-available? true
   :available-media-types ["application/json"]
@@ -39,4 +51,5 @@
 
 
 (defroutes api-routes
-  (POST "/api/snap" [] create-snap))
+  (POST "/api/snap" [] create-snap)
+  (GET "/api/snap/:snap-id" [snap-id] (get-snap snap-id)))

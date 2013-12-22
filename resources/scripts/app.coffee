@@ -17,5 +17,8 @@ angular.module('snaplyApp', [
       .when '/about',
         templateUrl: 'views/about.html'
         controller: 'AboutCtrl'
+      .when '/view/:snapId',
+        templateUrl: 'views/snapview.html'
+        controller: 'SnapViewCtrl'
       .otherwise
         redirectTo: '/'
