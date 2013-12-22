@@ -9,12 +9,9 @@ angular.module('snaplyApp')
       $http.get('/api/snap/'+$scope.snapId)
 
         .success (data, status, headers, config) ->
-          console.log 'success load'
-          console.log data
           $scope.media = data.imageData
 
         .error (data, status, headers, config) ->
-          console.log 'ERROR'
           console.log data
 
     getMedia()

@@ -2,10 +2,11 @@
   (:require [monger.core :as mg]
             [monger.collection :as mc]
             [monger.query :as mq]
-            [snaply.util :refer [datetime]]))
+            [snaply.util :refer [datetime]]
+            [environ.core :refer [env]]))
 
 
-(mg/connect-via-uri! "mongodb://localhost/snaply")
+(mg/connect-via-uri! (env :db-uri))
 
 
 (defn create-snap [id image-data]
