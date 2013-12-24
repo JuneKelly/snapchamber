@@ -1,6 +1,6 @@
 {
   "name": "snaply",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "dependencies": {
     "angular": "~1.2.0",
     "json3": "~3.2.4",
