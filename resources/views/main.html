@@ -1,24 +1,28 @@
-
-<div class="jumbotron row">
-  <div id="main-panel" class="col-md-12" ng-hide="media">
-    <ng-camera
-      type="photo"
-      enabled="true"
-      width="640"
-      height="480"
-      countdown="3"
-      ng-model="media"
-      capture-message="Go!"></ng-camera>
+<div class="row">
+  <div class="jumbotron">
+    <div id="main-panel" class="col-md-12" ng-hide="media">
+      <div class="text-center">
+        <ng-camera
+          type="photo"
+          enabled="true"
+          width="640"
+          height="480"
+          countdown="3"
+          ng-model="media"
+          capture-message="Go!"></ng-camera>
+        </div>
+    </div>
+    <div id="image-view" ng-show="media" class="text-center">
+      <img id="preview" class="img-rounded" ng-src="{{media}}">
+      <p>
+        <button id="save" class="btn btn-success" ng-click="saveMedia()">Save</button>
+        <button id="clear" class="btn btn-warning" ng-click="clearMedia()">Back</button>
+      </p>
+    </div>
   </div>
-  <div id="image-view" ng-show="media">
-    <img id="preview" class="img-rounded" ng-src="{{media}}">
-    <p>
-      <button id="save" class="btn btn-success" ng-click="saveMedia()">Save</button>
-      <button id="clear" class="btn btn-warning" ng-click="clearMedia()">Back</button>
-    </p>
-    <p id="image-link" ng-show="imageLink">
-    <code>{{imageLink}}</code>
+  <div ng-show="imageLink" class="col-md-12">
+    <p id="image-link">
+      <code>{{imageLink}}</code>
     </p>
   </div>
 </div>
-
