@@ -10,7 +10,8 @@
           countdown="3"
           ng-model="media"
           capture-message="Go!"></ng-camera>
-        </div>
+        <br />
+      </div>
     </div>
     <div id="image-view" ng-show="media" class="text-center">
       <img id="preview" class="img-rounded" ng-src="{{media}}">
@@ -20,10 +21,10 @@
       </p>
     </div>
   </div>
-  <div ng-show="imageLink" class="col-md-12">
-    <p id="image-link">
-      Your image link: <br>
-      <code>{{imageLink}}</code>
-    </p>
+</div>
+<div class="row">
+  <div id="image-link" ng-show="imageLink" class="col-md-11">
+    Your image link: <br>
+    <code>{{imageLink}}</code>
   </div>
 </div>
