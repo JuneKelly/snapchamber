@@ -20,4 +20,3 @@ angular.module('snaplyApp')
           console.log data
         )
 
-      $scope.imageLink = "http://example.com/view/asdfqwerzxcv"
