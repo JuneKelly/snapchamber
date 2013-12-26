@@ -8,32 +8,7 @@
             [com.postspectacular.rotor :as rotor]
             [selmer.parser :as parser]
             [environ.core :refer [env]]
-            [clojurewerkz.quartzite.scheduler :as qs]
-            [clojurewerkz.quartzite.schedule.simple
-             :refer [schedule
-                     repeat-forever
-                     with-interval-in-minutes]]
-            [clojurewerkz.quartzite.jobs :as j]
-            [clojurewerkz.quartzite.triggers :as t]
-            [snapchamber.db :as db]))
-
-
-;; playing with quartzite
-(j/defjob CleanupSnaps [ctx]
-  (db/cleanup-snaps!))
-
-(def job
-  (j/build
-    (j/of-type CleanupSnaps)
-    (j/with-identity (j/key "jobs.cleanup-snaps.1"))))
-
-(def trigger
-  (t/build
-    (t/with-identity (t/key "triggers.1"))
-    (t/start-now)
-    (t/with-schedule (schedule
-                       (repeat-forever)
-                       (with-interval-in-minutes 15)))))
+            [snapchamber.schedule :as sched]))
 
 
 ;; ;; ;; ;;
@@ -64,11 +39,7 @@
   (if (env :selmer-dev) (parser/cache-off!))
   (timbre/info "snapchamber started successfully")
 
-  ;; Quartzite scheduler
-  (qs/initialize)
-  (qs/start)
-  (qs/schedule job trigger))
-
+  (sched/start-scheduled-tasks!))
 
 (defn destroy
   "destroy will be called when your application
