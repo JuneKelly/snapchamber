@@ -22,3 +22,16 @@ angular.module('snapchamberApp', [
         controller: 'SnapViewCtrl'
       .otherwise
         redirectTo: '/'
+
+
+# collapse the menu on click
+$(->
+  navMain = $("#main-menu")
+
+  navMain.on(
+    "click",
+    "a",
+    null,
+    () -> navMain.collapse('hide')
+  )
+)
