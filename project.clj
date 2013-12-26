@@ -2,6 +2,7 @@
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
 
+
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [lib-noir "0.7.6"]
                  [compojure "1.1.6"]
@@ -17,15 +18,19 @@
                  [clj-time "0.6.0"]
                  [environ "0.4.0"]]
 
+
   :aot :all
   :repl-options {:init-ns snapchamber.repl}
+
 
   :plugins [[lein-ring "0.8.7"]
             [lein-environ "0.4.0"]]
 
+
   :ring {:handler snapchamber.handler/app
          :init    snapchamber.handler/init
          :destroy snapchamber.handler/destroy}
+
 
   :profiles
   {:production
@@ -44,5 +49,6 @@
    {:dependencies [[ring-mock "0.1.5"]
                    [ring/ring-devel "1.2.1"]]
     :env {:selmer-dev true}}}
+
 
   :min-lein-version "2.0.0")
