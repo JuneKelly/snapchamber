@@ -1,7 +1,12 @@
 <div class="row">
-  <div class="jumbotron">
+  <div class="text-center">
+    <div id="image-link" ng-show="imageLink" class="col-md-12">
+      <div class="alert alert-success">
+        Your image link: <a ng-href="{{imageLink}}">{{imageLink}}</a>
+      </div>
+    </div>
     <div id="main-panel" class="col-md-12" ng-hide="media">
-      <div class="text-center">
+      <div class="">
         <ng-camera
           type="photo"
           enabled="true"
@@ -20,11 +25,5 @@
         <button id="clear" class="btn btn-warning" ng-click="clearMedia()">Back</button>
       </p>
     </div>
-  </div>
-</div>
-<div class="row">
-  <div id="image-link" ng-show="imageLink" class="col-md-11">
-    Your image link: <br>
-    <code>{{imageLink}}</code>
   </div>
 </div>

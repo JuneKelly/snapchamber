@@ -1,12 +1,16 @@
 'use strict'
 
+
 angular.module('snaplyApp')
   .controller 'MainCtrl', ($scope, $http, $location) ->
     $scope.media = ""
     $scope.imageLink = ""
 
+
     $scope.clearMedia = ->
       $scope.media = ""
+      $scope.imageLink = ""
+
 
     $scope.saveMedia = ->
       console.log 'SAVE MEDIA'
