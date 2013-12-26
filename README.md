@@ -1,4 +1,4 @@
-# snaply
+# snapchamber
 
 A photo sharing app in Clojure and AngularJS
 
