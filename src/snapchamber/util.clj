@@ -1,4 +1,4 @@
-(ns snaply.util
+(ns snapchamber.util
   (:require [noir.io :as io]
             [markdown.core :as md]))
 

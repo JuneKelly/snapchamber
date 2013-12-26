@@ -1,10 +1,10 @@
-(ns snaply.routes.api
+(ns snapchamber.routes.api
   (:use compojure.core)
   (:require [liberator.core
              :refer [defresource
                      request-method-in]]
-            [snaply.util :as util]
-            [snaply.db :as db]))
+            [snapchamber.util :as util]
+            [snapchamber.db :as db]))
 
 
 (defn save-snap

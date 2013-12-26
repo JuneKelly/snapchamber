@@ -1,7 +1,7 @@
-(ns snaply.routes.home
+(ns snapchamber.routes.home
   (:use compojure.core)
-  (:require [snaply.views.layout :as layout]
-            [snaply.util :as util]))
+  (:require [snapchamber.views.layout :as layout]
+            [snapchamber.util :as util]))
 
 
 (defn home-page []

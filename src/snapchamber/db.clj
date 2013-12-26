@@ -1,9 +1,9 @@
-(ns snaply.db
+(ns snapchamber.db
   (:require [monger.core :as mg]
             [monger.collection :as mc]
             [monger.query :as mq]
             monger.joda-time
-            [snaply.util :refer [datetime]]
+            [snapchamber.util :refer [datetime]]
             [environ.core :refer [env]]
             [clj-time.core :refer [now minus hours]]))
 

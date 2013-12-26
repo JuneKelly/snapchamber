@@ -1,7 +1,7 @@
-(ns snaply.test.handler
+(ns snapchamber.test.handler
   (:use clojure.test
         ring.mock.request
-        snaply.handler))
+        snapchamber.handler))
 
 (deftest test-app
   (testing "main route"

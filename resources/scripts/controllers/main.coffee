@@ -1,7 +1,7 @@
 'use strict'
 
 
-angular.module('snaplyApp')
+angular.module('snapchamberApp')
   .controller 'MainCtrl', ($scope, $http, $location) ->
     $scope.media = ""
     $scope.imageLink = ""

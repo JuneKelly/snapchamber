@@ -1,10 +1,10 @@
-(ns snaply.views.layout
+(ns snapchamber.views.layout
   (:require [selmer.parser :as parser]
             [clojure.string :as s]
             [ring.util.response :refer [content-type response]]
             [compojure.response :refer [Renderable]]))
 
-(def template-path "snaply/views/templates/")
+(def template-path "snapchamber/views/templates/")
 
 (deftype RenderableTemplate [template params]
   Renderable

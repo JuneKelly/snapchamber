@@ -1,5 +1,5 @@
-(ns snaply.repl
-  (:use snaply.handler
+(ns snapchamber.repl
+  (:use snapchamber.handler
         ring.server.standalone
         [ring.middleware file-info file]))
 

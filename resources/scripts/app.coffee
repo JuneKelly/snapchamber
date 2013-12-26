@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('snaplyApp', [
+angular.module('snapchamberApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',

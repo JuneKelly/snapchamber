@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('snaplyApp')
+angular.module('snapchamberApp')
   .controller 'SnapViewCtrl', ($scope, $http, $routeParams) ->
     $scope.snapId = $routeParams.snapId
     $scope.media = ""

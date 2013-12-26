@@ -1,4 +1,4 @@
-(defproject snaply "0.2.3-SNAPSHOT"
+(defproject snapchamber "0.2.3-SNAPSHOT"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
 
@@ -18,14 +18,14 @@
                  [environ "0.4.0"]]
 
   :aot :all
-  :repl-options {:init-ns snaply.repl}
+  :repl-options {:init-ns snapchamber.repl}
 
   :plugins [[lein-ring "0.8.7"]
             [lein-environ "0.4.0"]]
 
-  :ring {:handler snaply.handler/app
-         :init    snaply.handler/init
-         :destroy snaply.handler/destroy}
+  :ring {:handler snapchamber.handler/app
+         :init    snapchamber.handler/init
+         :destroy snapchamber.handler/destroy}
 
   :profiles
   {:production
@@ -38,7 +38,7 @@
    {:dependencies [[ring-mock "0.1.5"]
                     [ring/ring-devel "1.2.1"]]
     :env {:selmer-dev true
-          :db-uri "mongodb://localhost/snaply"}}
+          :db-uri "mongodb://localhost/snapchamber"}}
 
    :testing
    {:dependencies [[ring-mock "0.1.5"]

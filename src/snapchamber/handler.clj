@@ -1,7 +1,7 @@
-(ns snaply.handler
+(ns snapchamber.handler
   (:require [compojure.core :refer [defroutes]]
-            [snaply.routes.home :refer [home-routes]]
-            [snaply.routes.api  :refer [api-routes]]
+            [snapchamber.routes.home :refer [home-routes]]
+            [snapchamber.routes.api  :refer [api-routes]]
             [noir.util.middleware :as middleware]
             [compojure.route :as route]
             [taoensso.timbre :as timbre]
@@ -15,7 +15,7 @@
                      with-interval-in-minutes]]
             [clojurewerkz.quartzite.jobs :as j]
             [clojurewerkz.quartzite.triggers :as t]
-            [snaply.db :as db]))
+            [snapchamber.db :as db]))
 
 
 ;; playing with quartzite
@@ -59,10 +59,10 @@
 
   (timbre/set-config!
     [:shared-appender-config :rotor]
-    {:path "snaply.log" :max-size (* 512 1024) :backlog 10})
+    {:path "snapchamber.log" :max-size (* 512 1024) :backlog 10})
 
   (if (env :selmer-dev) (parser/cache-off!))
-  (timbre/info "snaply started successfully")
+  (timbre/info "snapchamber started successfully")
 
   ;; Quartzite scheduler
   (qs/initialize)
@@ -74,7 +74,7 @@
   "destroy will be called when your application
    shuts down, put any clean up code here"
   []
-  (timbre/info "snaply is shutting down..."))
+  (timbre/info "snapchamber is shutting down..."))
 
 
 (defn template-error-page [handler]

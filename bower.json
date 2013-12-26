@@ -1,5 +1,5 @@
 {
-  "name": "snaply",
+  "name": "snapchamber",
   "version": "0.2.3",
   "dependencies": {
     "angular": "~1.2.0",
