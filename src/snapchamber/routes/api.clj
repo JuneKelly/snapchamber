@@ -26,8 +26,10 @@
 
 (defn post-malformed?
   [params]
-  (if (empty? (:imageData params))
+  (cond
+    (empty? (:imageData params))
     [true, (merge rep-map {:snap-error "imageData required"})]
+    :else
     [false, rep-map]))
 
 
