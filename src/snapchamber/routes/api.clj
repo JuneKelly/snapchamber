@@ -3,6 +3,7 @@
   (:require [liberator.core
              :refer [defresource
                      request-method-in]]
+            [noir.util.crypt :refer [md5]]
             [snapchamber.util :as util]
             [snapchamber.db :as db]))
 
@@ -62,14 +63,34 @@
         (post-malformed? params)))))
 
 
+(defn snap-exists? [context]
+  (let [method (get-in context [:request :request-method])
+        params (get-in context [:request :params])]
+    (cond
+      (= method :get)
+      (db/snap-exists? (get-in context [:request :route-params :snap-id]))
+      (= method :post)
+      (db/image-hash-exists? (md5 (:imageData params)))
+      :else
+      false)))
+
+
 (defresource snap [snap-id]
   :service-available? true
   :available-media-types ["application/json"]
   :method-allowed? (request-method-in :get :post)
 
+  :allowed?
+  (fn [context]
+    (let [method (get-in context [:request :request-method])
+          params (get-in context [:request :params])]
+      (if (= method :post)
+        (let [h (md5 (:imageData params))]
+          (not (db/image-hash-exists? h)))
+        true)))
+
   :exists?
-  (fn [_]
-    (db/snap-exists? snap-id))
+  snap-exists?
 
   :handle-ok
   (fn [_]
