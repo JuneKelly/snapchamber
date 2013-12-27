@@ -67,6 +67,10 @@
   :available-media-types ["application/json"]
   :method-allowed? (request-method-in :get :post)
 
+  :exists?
+  (fn [_]
+    (db/snap-exists? snap-id))
+
   :handle-ok
   (fn [_]
     (let [snap (db/get-snap snap-id)]
