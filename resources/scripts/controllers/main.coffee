@@ -3,17 +3,16 @@
 
 angular.module('snapchamberApp')
   .controller 'MainCtrl', ($scope, $http, $location) ->
-    $scope.media = ""
-    $scope.imageLink = ""
 
-
-    $scope.clearMedia = ->
+    $scope.reset = ->
       $scope.media = ""
       $scope.imageLink = ""
+      $scope.imageSubmitted = false
 
+    $scope.reset()
 
     $scope.saveMedia = ->
-      console.log 'SAVE MEDIA'
+      $scope.imageSubmitted = true
       $http.post('/api/snap', {imageData: $scope.media})
         .success( (data, status, headers, config) ->
           console.log 'success'

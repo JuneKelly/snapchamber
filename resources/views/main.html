@@ -21,8 +21,8 @@
     <div id="image-view" ng-show="media" class="text-center">
       <img id="preview" class="img-rounded" ng-src="{{media}}">
       <p>
-        <button id="save" class="btn btn-success" ng-disabled="imageLink" ng-click="saveMedia()">Save</button>
-        <button id="clear" class="btn btn-warning" ng-click="clearMedia()">Back</button>
+        <button id="save" class="btn btn-success" ng-disabled="imageSubmitted" ng-click="saveMedia()">Save</button>
+        <button id="clear" class="btn btn-warning" ng-click="reset()">Back</button>
       </p>
     </div>
   </div>
