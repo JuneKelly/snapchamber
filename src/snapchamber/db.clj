@@ -28,6 +28,22 @@
     doc))
 
 
+(defn get-snap-by-md5 [image-hash]
+  (let [doc (mc/find-one-as-map "snap" {:_md5 image-hash})]
+    doc))
+
+
+;; Check existence
+(defn snap-exists? [snap-id]
+  (not
+    (nil? (get-snap snap-id))))
+
+
+(defn image-hash-exists? [image-hash]
+  (not
+    (nil? (get-snap-by-md5 image-hash))))
+
+
 ;; Delete
 (defn remove-snaps [snap-ids]
   (mc/remove "snap" {:_id {:$in snap-ids}}))
