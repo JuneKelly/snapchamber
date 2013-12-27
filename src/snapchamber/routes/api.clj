@@ -12,10 +12,10 @@
    returning the new snap id"
   [context]
   (let [params (get-in context [:request :params])
+        image-data (params :imageData)
         snap-id (util/short-id)]
     (do
-      (db/create-snap snap-id
-                      (params :imageData))
+      (db/create-snap snap-id image-data)
       {:snap-id snap-id})))
 
 

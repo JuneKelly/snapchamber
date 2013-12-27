@@ -5,6 +5,7 @@
             monger.joda-time
             [snapchamber.util :refer [datetime]]
             [environ.core :refer [env]]
+            [noir.util.crypt :refer [md5]]
             [clj-time.core :refer [now minus hours]]))
 
 
@@ -15,6 +16,7 @@
 (defn create-snap [id image-data]
   (let [doc {:_id id
              :imageData image-data
+             :_md5 (md5 image-data)
              :created (datetime)}]
     (do
       (mc/insert "snap" doc))))
