@@ -86,6 +86,7 @@
           params (get-in context [:request :params])]
       (if (= method :post)
         (let [h (md5 (:imageData params))]
+          ;; if the same image already exists, request is not allowed
           (not (db/image-hash-exists? h)))
         true)))
 
