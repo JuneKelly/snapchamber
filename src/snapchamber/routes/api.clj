@@ -26,11 +26,31 @@
 
 (defn post-malformed?
   [params]
-  (cond
-    (empty? (:imageData params))
-    [true, (merge rep-map {:snap-error "imageData required"})]
-    :else
-    [false, rep-map]))
+  (let [image-data (:imageData params)]
+    (cond
+      ;; is the imageData string empty?
+      (empty? image-data)
+      [true, (merge rep-map
+                    {:snap-error "imageData required"})]
+
+      ;; is it a string?
+      (not (= java.lang.String (type image-data)))
+      [true, (merge rep-map
+                    {:snap-error "imageData should be a string"})]
+
+      ;; must be at least 24 characters long
+      (< (.length image-data) 24)
+      [true, (merge rep-map
+                    {:snap-error "imageData too small"})]
+
+      ;; must start with correct sequence
+      (not (= "data:image/jpeg;base64" (subs image-data 0 22)))
+      [true, (merge rep-map
+                    {:snap-error "imageData should be base64 jpeg"})]
+
+      ;; else it must be ok
+      :else
+      [false, rep-map])))
 
 
 (defn snap-request-malformed? [context]
