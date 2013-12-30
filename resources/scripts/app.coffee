@@ -12,13 +12,13 @@ angular.module('snapchamberApp', [
 
     $routeProvider
       .when '/',
-        templateUrl: 'views/main.html'
+        templateUrl: 'static/views/main.html'
         controller: 'MainCtrl'
       .when '/about',
-        templateUrl: 'views/about.html'
+        templateUrl: 'static/views/about.html'
         controller: 'AboutCtrl'
       .when '/view/:snapId',
-        templateUrl: 'views/snapview.html'
+        templateUrl: 'static/views/snapview.html'
         controller: 'SnapViewCtrl'
       .otherwise
         redirectTo: '/'
