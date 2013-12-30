@@ -1,5 +1,10 @@
 <div class="row">
   <div class="text-center">
+    <div id="error-message" ng-show="errorMessage" class="col-md-12">
+      <div class="alert alert-danger">
+        Error: {{errorMessage}}
+      </div>
+    </div>
     <div id="snap-view">
       <img ng-src="{{media}}">
     </div>

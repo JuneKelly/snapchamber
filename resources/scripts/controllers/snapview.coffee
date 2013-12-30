@@ -4,6 +4,7 @@ angular.module('snapchamberApp')
   .controller 'SnapViewCtrl', ($scope, $http, $routeParams) ->
     $scope.snapId = $routeParams.snapId
     $scope.media = ""
+    $scope.errorMessage = ""
 
     getMedia = ->
       $http.get('/api/snap/'+$scope.snapId)
@@ -13,5 +14,10 @@ angular.module('snapchamberApp')
 
         .error (data, status, headers, config) ->
           console.log data
+          console.log status
+          if status = 404
+            $scope.errorMessage = "Snap not found."
+          else
+            $scope.errorMessage = "Something went horribly wrong"
 
     getMedia()
