@@ -14,12 +14,19 @@ angular.module('snapchamberApp', [
       .when '/',
         templateUrl: 'static/views/main.html'
         controller: 'MainCtrl'
+
       .when '/about',
         templateUrl: 'static/views/about.html'
         controller: 'AboutCtrl'
+
       .when '/view/:snapId',
         templateUrl: 'static/views/snapview.html'
         controller: 'SnapViewCtrl'
+
+      .when '/donate',
+        templateUrl: 'static/views/donate.html'
+        controller: 'DonateCtrl'
+
       .otherwise
         redirectTo: '/'
 
