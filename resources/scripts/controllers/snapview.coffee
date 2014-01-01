@@ -5,6 +5,7 @@ angular.module('snapchamberApp')
     $scope.snapId = $routeParams.snapId
     $scope.media = ""
     $scope.errorMessage = ""
+    $scope.imageLink = window.location.href
 
     getMedia = ->
       $http.get('/api/snap/'+$scope.snapId)
