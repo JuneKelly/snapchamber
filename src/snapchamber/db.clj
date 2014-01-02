@@ -24,8 +24,13 @@
 
 
 ;; Find
-(defn get-snap [snap-id]
-  (let [doc (mc/find-one-as-map "snap" {:_id snap-id})]
+(defn get-snap! [snap-id]
+  (let [doc (mc/find-and-modify
+              "snap"
+              {:_id snap-id}
+              {:$set {:lastViewed (now)}
+               :$inc {:viewCount 1.0}}
+              :return-new true)]
     doc))
 
 
@@ -37,7 +42,7 @@
 ;; Check existence
 (defn snap-exists? [snap-id]
   (not
-    (nil? (get-snap snap-id))))
+    (nil? (mc/find-one-as-map "snap" {:_id snap-id} {:_id 1}))))
 
 
 (defn image-hash-exists? [image-hash]

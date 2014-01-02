@@ -96,7 +96,7 @@
 
   :handle-ok
   (fn [_]
-    (let [snap (db/get-snap snap-id)]
+    (let [snap (db/get-snap! snap-id)]
       (do
         (db/stats-snap-viewed)
         {:snapId snap-id
