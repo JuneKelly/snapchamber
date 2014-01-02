@@ -7,7 +7,7 @@
             [snapchamber.util :as util]
             [snapchamber.db :as db]))
 
-
+;; handle POST
 (defn save-snap
   "Generate an id for the new snap and save it to database,
    returning the new snap id"
@@ -75,6 +75,14 @@
       :else
       false)))
 
+;; handle GET
+(defn retrieve-snap [snap-id]
+  (let [snap (db/get-snap! snap-id)]
+    (do
+      (db/stats-snap-viewed)
+      {:snapId snap-id
+       :imageData (:imageData snap)})))
+
 
 (defresource snap [snap-id]
   :service-available? true
@@ -95,12 +103,7 @@
   snap-exists?
 
   :handle-ok
-  (fn [_]
-    (let [snap (db/get-snap! snap-id)]
-      (do
-        (db/stats-snap-viewed)
-        {:snapId snap-id
-         :imageData (:imageData snap)})))
+  (fn [_] (retrieve-snap snap-id))
 
   :malformed?
   snap-request-malformed?
