@@ -67,10 +67,15 @@
 
 
 ;; Stats
-
 (defn stats-snap-created []
   (mc/update "scStats"
              {:_id "snap"}
              {:$inc {:snapsCreated 1.0}}
              :upsert true))
 
+
+(defn stats-snap-viewed []
+  (mc/update "scStats"
+             {:_id "snap"}
+             {:$inc {:snapsViewed 1.0}}
+             :upsert true))

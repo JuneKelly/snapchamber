@@ -97,8 +97,10 @@
   :handle-ok
   (fn [_]
     (let [snap (db/get-snap snap-id)]
-      {:snapId snap-id
-       :imageData (:imageData snap)}))
+      (do
+        (db/stats-snap-viewed)
+        {:snapId snap-id
+         :imageData (:imageData snap)})))
 
   :malformed?
   snap-request-malformed?
