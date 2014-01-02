@@ -11,6 +11,7 @@
 
 (mg/connect-via-uri! (env :db-uri))
 
+;; Snaps
 
 ;; Create
 (defn create-snap [id image-data]
@@ -63,3 +64,13 @@
     (do
       (println ">> Snaps to delete: " snap-ids)
       (remove-snaps snap-ids))))
+
+
+;; Stats
+
+(defn stats-snap-created []
+  (mc/update "scStats"
+             {:_id "snap"}
+             {:$inc {:snapsCreated 1.0}}
+             :upsert true))
+

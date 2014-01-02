@@ -17,6 +17,7 @@
         snap-id (util/short-id)]
     (do
       (db/create-snap snap-id image-data)
+      (db/stats-snap-created)
       {:snap-id snap-id})))
 
 
