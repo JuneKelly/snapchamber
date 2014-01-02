@@ -75,6 +75,7 @@
       :else
       false)))
 
+
 ;; handle GET
 (defn retrieve-snap [snap-id]
   (let [snap (db/get-snap! snap-id)]
