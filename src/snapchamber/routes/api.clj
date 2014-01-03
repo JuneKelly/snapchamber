@@ -5,6 +5,7 @@
                      request-method-in]]
             [noir.util.crypt :refer [md5]]
             [snapchamber.util :as util]
+            [taoensso.timbre :as timbre]
             [snapchamber.db :as db]))
 
 ;; handle POST
@@ -18,6 +19,7 @@
     (do
       (db/create-snap snap-id image-data)
       (db/stats-snap-created)
+      (timbre/info (str "Snap created: " snap-id))
       {:snap-id snap-id})))
 
 
@@ -81,6 +83,7 @@
   (let [snap (db/get-snap! snap-id)]
     (do
       (db/stats-snap-viewed)
+      (timbre/info (str "Snap viewed: " snap-id))
       {:snapId snap-id
        :imageData (:imageData snap)})))
 

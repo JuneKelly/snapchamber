@@ -6,6 +6,7 @@
             [snapchamber.util :refer [datetime]]
             [environ.core :refer [env]]
             [noir.util.crypt :refer [md5]]
+            [taoensso.timbre :as timbre]
             [clj-time.core :refer [now minus hours]]))
 
 
@@ -67,7 +68,7 @@
   (let [cutoff (minus (now) (hours 6))
         snap-ids (get-old-snap-ids cutoff)]
     (do
-      (println ">> Snaps to delete: " snap-ids)
+      (timbre/info (str "Snaps to delete: " (vec snap-ids)))
       (remove-snaps snap-ids))))
 
 
