@@ -4,11 +4,19 @@
 angular.module('snapchamberApp')
   .controller 'MainCtrl', ($scope, $http, $location) ->
 
-    $scope.reset = ->
+    isSupported = () ->
+      if (navigator.getUserMedia) or
+      (navigator.webkitGetUserMedia) or
+      (navigator.mozGetUserMedia) or
+      (navigator.msGetUserMedia) then true
+      else false
+
+    $scope.reset = () ->
       $scope.media = ""
       $scope.imageLink = ""
       $scope.imageSubmitted = false
       $scope.saveButtonText = 'Save'
+      $scope.isSupported = isSupported()
 
     $scope.reset()
 

@@ -1,5 +1,10 @@
 <div class="row">
   <div class="text-center">
+    <div id="not-supported-error" ng-hide="isSupported" class="col-md-12">
+      <div class="alert alert-danger">
+        Whoops! Looks like your browser does not support the features we need :(
+      </div>
+    </div>
     <div id="image-link" ng-show="imageLink" class="col-md-12">
       <div class="alert alert-success">
         Your image link: <a ng-href="{{imageLink}}">{{imageLink}}</a>
