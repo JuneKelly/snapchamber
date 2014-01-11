@@ -33,14 +33,10 @@
   (let [image-data (:imageData params)]
     (cond
       ;; is the imageData string empty?
-      (empty? image-data)
+      (or (not (= java.lang.String (type image-data)))
+          (empty? image-data))
       [true, (merge rep-map
-                    {:snap-error "imageData required"})]
-
-      ;; is it a string?
-      (not (= java.lang.String (type image-data)))
-      [true, (merge rep-map
-                    {:snap-error "imageData should be a string"})]
+                    {:snap-error "imageData required, and must be a string"})]
 
       ;; must be at least 24 characters long
       (< (.length image-data) 24)

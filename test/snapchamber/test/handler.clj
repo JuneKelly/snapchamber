@@ -2,7 +2,9 @@
   (:use clojure.test
         peridot.core
         snapchamber.handler)
-  (:require [snapchamber.test.test-util :as util]))
+  (:require [snapchamber.test.test-util :as util]
+            [cheshire.core :refer [generate-string
+                                   parse-string]]))
 
 
 (deftest test-routes
@@ -66,16 +68,73 @@
                                  :request-method :post
                                  :body request-body))
             response (:response request)]
-
         (is (= "application/json;charset=UTF-8"
                (get (:headers response) "Content-Type")))
-
         (is (= (:status response) 201)))
 
+
       ;; failed post, no imageData
+      (let [request-body "{\"somethingElse\": \"lol\"}"
+            request (-> (session app)
+                        (content-type "application/json;charset-UTF-8")
+                        (request "/api/snap"
+                                 :request-method :post
+                                 :body request-body))
+            response (:response request)
+            response-json (parse-string (response :body) true)]
+        (is (= "application/json;charset=UTF-8"
+               (get (:headers response) "Content-Type")))
+        (is (not (= (:status response) 201)))
+        (is (= (:status response) 400))
+        (is (= "imageData required, and must be a string" (response-json :error))))
+
+
       ;; failed post, imageData too short
+      (let [request-body "{\"imageData\": \"data:image\"}"
+            request (-> (session app)
+                        (content-type "application/json;charset-UTF-8")
+                        (request "/api/snap"
+                                 :request-method :post
+                                 :body request-body))
+            response (:response request)
+            response-json (parse-string (response :body) true)]
+        (is (= "application/json;charset=UTF-8"
+               (get (:headers response) "Content-Type")))
+        (is (not (= (:status response) 201)))
+        (is (= (:status response) 400))
+        (is (= "imageData too small" (response-json :error))))
+
+
       ;; failed post, imageData not bas64 jped
+      (let [request-body "{\"imageData\": \"derpderpderpderpderpderpderpderpderpderp\"}"
+            request (-> (session app)
+                        (content-type "application/json;charset-UTF-8")
+                        (request "/api/snap"
+                                 :request-method :post
+                                 :body request-body))
+            response (:response request)
+            response-json (parse-string (response :body) true)]
+        (is (= "application/json;charset=UTF-8"
+               (get (:headers response) "Content-Type")))
+        (is (not (= (:status response) 201)))
+        (is (= (:status response) 400))
+        (is (= "imageData should be base64 jpeg" (response-json :error))))
+
+
       ;; failed post, imageData not a string
+      (let [request-body "{\"imageData\": false}"
+            request (-> (session app)
+                        (content-type "application/json;charset-UTF-8")
+                        (request "/api/snap"
+                                 :request-method :post
+                                 :body request-body))
+            response (:response request)
+            response-json (parse-string (response :body) true)]
+        (is (= "application/json;charset=UTF-8"
+               (get (:headers response) "Content-Type")))
+        (is (not (= (:status response) 201)))
+        (is (= (:status response) 400))
+        (is (= "imageData required, and must be a string" (response-json :error))))
 
       ;; failed post, imageData matches existing image
       ;; cleanup
