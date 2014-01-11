@@ -49,34 +49,34 @@
 
       ;; cleanup
       (util/drop-database!)))
-;
-;  (testing "save snap"
-;    (do
-;      ;; setup
-;      (util/drop-database!)
-;      (util/populate-snaps!)
-;
-;      ;; assert
-;
-;      ;; sucessful post
-;      (let [response
-;            (app (header
-;                   (request :post "/api/snap"
-;                            {:imageData "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAD"})
-;                   "Content-Type" "application-json"))]
-;        (is (= "application/json;charset=UTF-8"
-;               (get (:headers response) "Content-Type")))
-;        (is (= (:status response) 200))
-;        (is (= [:snapId] (keys response))))
-;
-;
-;      ;; failed post, no imageData
-;      ;; failed post, imageData too short
-;      ;; failed post, imageData not bas64 jped
-;      ;; failed post, imageData not a string
-;
-;      ;; failed post, imageData matches existing image
-;      ;; cleanup
-;      (util/drop-database!)))
 
-)
+  (testing "save snap"
+    (do
+      ;; setup
+      (util/drop-database!)
+      (util/populate-snaps!)
+
+      ;; assert
+
+      ;; sucessful post
+      (let [request-body "{\"imageData\": \"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAX\"}"
+            request (-> (session app)
+                        (content-type "application/json;charset-UTF-8")
+                        (request "/api/snap"
+                                 :request-method :post
+                                 :body request-body))
+            response (:response request)]
+
+        (is (= "application/json;charset=UTF-8"
+               (get (:headers response) "Content-Type")))
+
+        (is (= (:status response) 201)))
+
+      ;; failed post, no imageData
+      ;; failed post, imageData too short
+      ;; failed post, imageData not bas64 jped
+      ;; failed post, imageData not a string
+
+      ;; failed post, imageData matches existing image
+      ;; cleanup
+      (util/drop-database!))))
