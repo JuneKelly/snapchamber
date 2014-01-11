@@ -41,6 +41,7 @@
 
    :dev
    {:dependencies [[ring-mock "0.1.5"]
+                   [peridot "0.2.2"]
                     [ring/ring-devel "1.2.1"]]
     :env {:selmer-dev true
           :db-uri "mongodb://localhost/snapchamber"}}

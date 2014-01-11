@@ -28,7 +28,7 @@ module.exports = (grunt) ->
       server:
         cmd: "lein with-profile dev ring server-headless"
       leintest:
-        cmd: "lein with-profile testing test"
+        cmd: "lein with-profile dev test"
       build:
         cmd: "lein with-profile production ring uberjar"
 
