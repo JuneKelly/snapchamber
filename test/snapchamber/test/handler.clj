@@ -105,7 +105,7 @@
         (is (= "imageData too small" (response-json :error))))
 
 
-      ;; failed post, imageData not bas64 jped
+      ;; failed post, imageData not bas64 jpeg
       (let [request-body "{\"imageData\": \"derpderpderpderpderpderpderpderpderpderp\"}"
             request (-> (session app)
                         (content-type "application/json;charset-UTF-8")
@@ -137,5 +137,17 @@
         (is (= "imageData required, and must be a string" (response-json :error))))
 
       ;; failed post, imageData matches existing image
+      (let [request-body "{\"imageData\": \"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAX\"}"
+            request (-> (session app)
+                        (content-type "application/json;charset-UTF-8")
+                        (request "/api/snap"
+                                 :request-method :post
+                                 :body request-body))
+            response (:response request)]
+        (is (= "text/plain"
+               (get (:headers response) "Content-Type")))
+        (is (not (= (:status response) 201)))
+        (is (= (:status response) 403)))
+
       ;; cleanup
       (util/drop-database!))))
