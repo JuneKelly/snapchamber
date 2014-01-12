@@ -51,5 +51,4 @@
                    [ring/ring-devel "1.2.1"]]
     :env {:selmer-dev true}}}
 
-
   :min-lein-version "2.0.0")
