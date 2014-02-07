@@ -1,4 +1,4 @@
-(defproject snapchamber "0.3.5"
+(defproject snapchamber "0.3.6"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
 
